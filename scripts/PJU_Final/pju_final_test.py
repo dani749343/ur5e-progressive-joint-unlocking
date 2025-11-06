@@ -12,12 +12,9 @@ from pju_final_callbacks import UR5eTaskWrapper, GoalGMMSampler
 ROOT = Path(__file__).resolve().parents[2]
 
 TEST_PHASE = "arc"  # "arc", "descent", or "cascade"
-TEST_STAGE = 0  # Only used for arc/descent modes (ignored for cascade)
-CASCADE_ARC_DISTANCE_TOL = 0.1  # Relaxed tolerance for arc→descent transition (None = use default)
+TEST_STAGE = 0  
+CASCADE_ARC_DISTANCE_TOL = 0.1  
 
-# =========================
-# TRAINING CONFIGURATION (must match training)
-# =========================
 ARC_DOF_SEQUENCE = [1, 3, 4, 5, 6]
 DESCENT_DOF_SEQUENCE = [1, 4, 5, 6]
 
@@ -63,9 +60,7 @@ SNAPSHOT_PATH = ROOT / "homestri_ur5e_rl" / "envs" / "base_robot" / "pose.json"
 
 DESIRED_GOAL = np.array([-0.65, 0.1, 0.03])
 
-# =========================
-# HELPER FUNCTIONS
-# =========================
+
 def frozen_joints_for_dof(dof):
     return {1: [1,2,3,4,5], 3: [3,4,5], 4: [4,5], 5: [5], 6: []}.get(dof, [])
 
@@ -124,8 +119,7 @@ def apply_random_descent_pose(env):
     pose_data = json.load(open(np.random.choice(poses)))
     base = env.unwrapped
     base._apply_pose_data(pose_data)
-    
-    # Update box orientation for gripper alignment
+
     box_bid = mujoco.mj_name2id(base.model, mujoco.mjtObj.mjOBJ_BODY, "box")
     quat_adr = base.model.jnt_qposadr[base.model.body_jntadr[box_bid]] + 3
     base.arc_reward.set_box_orientation(base.data.qpos[quat_adr:quat_adr + 4])
@@ -134,9 +128,7 @@ def apply_random_descent_pose(env):
         base.desired_goal = np.asarray(pose_data["box_start_xyz"], float).reshape(3)
     mujoco.mj_forward(base.model, base.data)
 
-# =========================
-# TOLERANCE CHECKING
-# =========================
+# Tolerances
 def get_ee_pos(env):
     base = env.unwrapped
     site = mujoco.mj_name2id(base.model, mujoco.mjtObj.mjOBJ_SITE, "robot0:eef_site")
@@ -191,9 +183,7 @@ def tolerances_met(env, positions, phase, stage, cascade_mode=False):
     ]
     return all(checks)
 
-# =========================
-# TEST RUNNERS
-# =========================
+# Phase tests
 def test_arc(stage):
     print(f"[ARC TEST] Stage {stage} (DoF {ARC_DOF_SEQUENCE[stage]})")
     env = make_env("arc", stage)
@@ -264,9 +254,7 @@ def test_cascade():
             break
     env.close()
 
-# =========================
-# MAIN
-# =========================
+# Main
 if __name__ == "__main__":
     if TEST_PHASE == "arc":
         test_arc(TEST_STAGE)
