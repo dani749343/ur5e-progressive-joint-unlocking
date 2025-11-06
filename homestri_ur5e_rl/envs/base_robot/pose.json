@@ -1,0 +1,24 @@
+{
+  "arm_init_qpos": {
+    "robot0:ur5e:shoulder_pan_joint": 0.0,
+    "robot0:ur5e:shoulder_lift_joint": -1.5707963267948966,
+    "robot0:ur5e:elbow_joint": -1.5707963267948966,
+    "robot0:ur5e:wrist_1_joint": -1.5707963267948966,
+    "robot0:ur5e:wrist_2_joint": 1.5707963267948966,
+    "robot0:ur5e:wrist_3_joint": 0.0
+  },
+  "box_start_xyz": [
+    -0.65,
+    0.1,
+    0.03
+  ],
+  "box_start_rpy": [
+    0.0,
+    -0.0,
+    0.0
+  ],
+  "gripper_start": [
+    0.0,
+    0.0
+  ]
+}

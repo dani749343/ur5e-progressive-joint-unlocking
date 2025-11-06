@@ -1,0 +1,10 @@
+<mujoco>
+  <worldbody>
+    <!-- Box to pick up -->
+    <body name="box" pos="-0.1 -0.65 0.03" euler="0 0 0">
+      <joint type="free"/>
+      <geom name="box_geom" type="box" size="0.03 0.03 0.03" rgba="1 0.3 0.3 1" mass="0.1"/>
+      <site name="box_site" pos="0 0 0" size="0.001"/>
+    </body>
+  </worldbody>
+</mujoco>

@@ -1,0 +1,9 @@
+gymnasium
+gymnasium-robotics
+mujoco
+numpy
+pynput
+stable-baselines3[extra]
+stable_baselines3
+syllabus_rl
+torch
